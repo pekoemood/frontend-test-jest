@@ -32,3 +32,13 @@ test("logRoles: レンダリング結果からロール・アクセシブルネ�
   const { container } = render(<Form name="taro" />);
   logRoles(container);
 });
+
+test('Snapshot: アカウント「jiro」が表示される', () => {
+  const { container } = render(<Form name='jiro' />);
+  expect(container).toMatchSnapshot();
+})
+
+test('logRole: レンダリング結果からロールとアクセシブルネームを確認', () => {
+  const { container }  = render(<Form name="taro"/>);
+  logRoles(container);
+})

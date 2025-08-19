@@ -6,6 +6,8 @@ import {
   inputContactNumber,
   inputDeliveryAddress,
 } from "./testingUtils";
+import { sub } from "../../03/02";
+import { Form } from "../../component/05";
 
 jest.mock("./fetchers");
 
@@ -40,13 +42,21 @@ test("成功時「登録しました」が表示される", async () => {
   expect(screen.getByText("登録しました")).toBeInTheDocument();
 });
 
-test("失敗時「登録に失敗しました」が表示される", async () => {
+// test("失敗時「登録に失敗しました」が表示される", async () => {
+//   const mockFn = mockPostMyAddress(500);
+//   render(<RegisterAddress />);
+//   const submitValues = await fillValuesAndSubmit();
+//   expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
+//   expect(screen.getByText("登録に失敗しました")).toBeInTheDocument();
+// });
+
+test('失敗時「登録に失敗しました」が表示される', async () => {
   const mockFn = mockPostMyAddress(500);
-  render(<RegisterAddress />);
+  render (<RegisterAddress />);
   const submitValues = await fillValuesAndSubmit();
   expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
-  expect(screen.getByText("登録に失敗しました")).toBeInTheDocument();
-});
+  expect(screen.getByText('登録に失敗しました')).toBeInTheDocument();
+})
 
 test("バリデーションエラー時「不正な入力値が含まれています」が表示される", async () => {
   render(<RegisterAddress />);
@@ -61,10 +71,12 @@ test("不明なエラー時「不明なエラーが発生しました」が表�
 });
 
 test("Snapshot: 登録フォームが表示される", async () => {
-  mockPostMyAddress();
-  // const mockFn = mockPostMyAddress();
+  // mockPostMyAddress();
+  const mockFn = mockPostMyAddress();
   const { container } = render(<RegisterAddress />);
-  // const submitValues = await fillValuesAndSubmit();
-  // expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
+  const submitValues = await fillValuesAndSubmit();
+  expect(mockFn).toHaveBeenCalledWith(expect.objectContaining(submitValues));
   expect(container).toMatchSnapshot();
 });
+
+
